@@ -67,8 +67,8 @@ class JFlow extends EventTarget{
         const scaleRatio = Math.min(w_ratio, h_ratio);
         this.scale = scaleRatio;
         // this.initScale = scaleRatio;
-        position.x = align === 'x' ? contentBox.x : (contentBox.width - p_width * scaleRatio) / 2
-        position.y = align === 'y' ? contentBox.y : (contentBox.height - p_height * scaleRatio) / 2
+        position.x = align === 'x' ? contentBox.x : (contentBox.width - p_width * scaleRatio) / 2 + padding
+        position.y = align === 'y' ? contentBox.y : (contentBox.height - p_height * scaleRatio) / 2 + padding
         position.offsetX = position.x - x * scaleRatio;
         position.offsetY = position.y - y * scaleRatio;
         this.position = position;
