@@ -1,5 +1,5 @@
-class EventEmitter {
+class EventEmitter extends EventTarget{
     constructor() {
-        
+        super();
     }
 }

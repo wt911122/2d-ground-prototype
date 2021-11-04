@@ -13,7 +13,9 @@ export function createCanvas(wrapper) {
     
     // Normalize coordinate system to use css pixels.
     // ctx.scale(scale, scale);
-    wrapper.append(canvas);
+    if(wrapper) {
+        wrapper.append(canvas);
+    }
     return {
         canvas,
         width,
@@ -25,4 +27,17 @@ export function createCanvas(wrapper) {
         ctx,
         scale,
     }
+}
+
+const caheCanvas = document.createElement('canvas');
+caheCanvas.width = 1;
+caheCanvas.height = 1;
+const caheCanvasctx = caheCanvas.getContext('2d');
+const scale = window.devicePixelRatio;
+caheCanvasctx.scale(scale, scale);
+
+export function requestCacheCanvas(render) {
+    caheCanvasctx.clearRect(0,0,5,5);
+    render(caheCanvasctx);
+    caheCanvasctx.clearRect(0,0,5,5);
 }
