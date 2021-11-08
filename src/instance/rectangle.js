@@ -10,6 +10,10 @@ class Rectangle extends Instance {
     }
 
     render(ctx) {
+        ctx.save();
+        if(this._isMoving){
+            ctx.globalAlpha = 0.5;
+        }
         ctx.beginPath();
         const {
             borderRadius: radius, anchor, width, height
@@ -48,9 +52,11 @@ class Rectangle extends Instance {
             ctx.fillText(this.content, this.anchor[0], this.anchor[1]);
         } 
        
-        if(this.status.focus) {
+        if(this._isTargeting) {
             this.renderFocus(ctx);
         }
+
+        ctx.restore();
     }
 
     isHit(point) {

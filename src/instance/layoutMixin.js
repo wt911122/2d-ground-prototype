@@ -15,6 +15,12 @@ const LayoutMixin = {
             this._belongs.recalculate();
         }
     },
+    staticCheck(instance) {
+        if(this._layout) {
+            return this._layout.staticCheck(instance, this);
+        }
+        return false;
+    },
     reflow() {
         if(this._layout) {
             this._layout.reflow(this);

@@ -53,6 +53,10 @@ class Group extends Rectangle {
     }
 
     render(ctx) {
+        ctx.save();
+        if(this._isMoving){
+            ctx.globalAlpha = 0.5;
+        }
         // this._getBoundingGroupRect();
         const anchor = this.anchor;
         ctx.save();
@@ -72,7 +76,11 @@ class Group extends Rectangle {
         // } else {
            
         // }
-        ctx.translate(-anchor[0] + spanH, -anchor[1] + spanV)
+        ctx.translate(-anchor[0] + spanH, -anchor[1] + spanV);
+        if(this._isTargeting) {
+            this.renderFocus(ctx);
+        }
+        ctx.restore();
     }
 
     _calculatePointBack(point) {

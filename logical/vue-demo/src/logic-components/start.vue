@@ -1,11 +1,13 @@
 <template>
-    <j-group @hover="onHover" :name="this.name" :configs="configs">
+    <j-group 
+        @mouseenter="onMouseEnter"
+        @mouseleave="onMouseLeave" :name="this.name" :configs="configs">
         <j-text ref="start" :configs="{
             font: '12px -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,Tahoma,Arial,Noto Sans,PingFang SC,Microsoft YaHei,Hiragino Sans GB,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji',
             textColor,
             content: '开始',
         }">
-        </j-text>
+        </j-text>``
         <j-point :configs="{
             color: '#99dbc5',
             radius: 11,
@@ -40,15 +42,11 @@ export default {
         console.log(this)
     },
     methods: {
-        onHover(event) {
+        onMouseEnter(){
             this.textColor = 'red'
-            // if(event.detail.target === this.$refs.start._jflowInstance){
-            //     console.log('xxxx');
-            //     this.textColor = 'red'
-            // } else {
-            //     this.textColor = '#585c63'
-            // }
-            
+        },
+        onMouseLeave() {
+             this.textColor = '#585c63'
         }
     }
 }

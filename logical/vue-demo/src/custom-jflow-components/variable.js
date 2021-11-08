@@ -44,7 +44,7 @@ class Variable extends Rectangle{
         const left = this.padding
         ctx.fillText(this.content, left, 0);
         ctx.translate(-x, -y - height/2);
-        if(this.status.focus) {
+        if(this._isTargeting) {
             this.renderFocus(ctx);
         }
         

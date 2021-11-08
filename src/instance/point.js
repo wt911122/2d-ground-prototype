@@ -10,6 +10,10 @@ class Point extends Instance {
     }
 
     render(ctx) {
+        ctx.save();
+        if(this._isMoving){
+            ctx.globalAlpha = 0.5;
+        }
         ctx.beginPath();
         ctx.arc(this.anchor[0], this.anchor[1], this.radius, 0, 2 * Math.PI);
         ctx.fillStyle = this.color;
@@ -21,9 +25,10 @@ class Point extends Instance {
             ctx.fillStyle = this.textColor;
             ctx.fillText(this.content, this.anchor[0], this.anchor[1]);
         }   
-        if(this.status.focus) {
+        if(this._isTargeting) {
             this.renderFocus(ctx);
         }
+        ctx.restore();
     }
 
     isHit(point) {

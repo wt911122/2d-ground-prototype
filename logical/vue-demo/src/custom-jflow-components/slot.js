@@ -1,4 +1,4 @@
-import { Rectangle, Group } from 'JFlow';
+import { Rectangle, Group, JFlowEvent } from 'JFlow';
 
 class Slot extends Group{
     constructor(configs) {
@@ -28,10 +28,9 @@ class Slot extends Group{
             this.addToStack(instance);
             rectangle.visible = false;
             this.recalculate();
-            this.bubbleEvent(new CustomEvent('droped'), {
-                detail: {
-                    instance,
-                }
+            this.bubbleEvent(new JFlowEvent('droped'), {
+                instance,
+                bubbles: true,
             })
         })
     }

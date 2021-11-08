@@ -24,7 +24,6 @@ export default function (nameNode) {
                     const lk = k.toLowerCase();
                     return !(lk.endsWith('color') || k.endsWith('style'));
                 });
-                console.log(reflowKeys)
                 this._jflowInstance.setConfig(val);
                 if(reflowKeys.length) {
                     this._jflowInstance.recalculate();

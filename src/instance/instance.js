@@ -1,5 +1,6 @@
 import { setUniqueId, getUniqueId } from '../utils/functions';
 const margin = 5;
+const ishitKey = Symbol('ishit');
 class Instance extends EventTarget{
     constructor(configs = {}) {
         super();
@@ -12,9 +13,9 @@ class Instance extends EventTarget{
             focus: false,
             moving: false,
         }
-        this._jflow = undefined;
+        // this._jflow = undefined;
         this._belongs = undefined;
-
+        this[ishitKey] = false; 
         /**
             通用样式属性
          */
@@ -29,6 +30,32 @@ class Instance extends EventTarget{
         this.textBaseline =     configs.textBaseline || 'middle';
     }
 
+    get _isTargeting() {
+        return this === (this._jflow._target.instance || this._jflow._target.link);
+    }
+
+    get _isMoving() {
+        return this === this._jflow._target.moving;
+    }
+
+    get _isHit() {
+        return this[ishitKey];
+    }
+
+    get _jflow() {
+        return this._belongs.uniqueName === 'jflow' ? this._belongs : this._belongs._jflow;
+    }
+
+    set _isHit(ishit) {
+        if(this[ishitKey] !== ishit) {
+            this.dispatchEvent(new CustomEvent(ishit ? 'mouseenter': 'mouseleave' , {
+                detail: {
+                    instance: this,
+                }
+            }));
+        }
+        this[ishitKey] = ishit; // validation could be checked here such as only allowing non numerical values
+    }
     setConfig(configs) {
         Object.assign(this, configs)
     }

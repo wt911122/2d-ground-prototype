@@ -21,10 +21,15 @@ class Icon extends Rectangle {
     }
 
     render(ctx) {
+        ctx.save();
+        if(this._isMoving){
+            ctx.globalAlpha = 0.5;
+        }
         Rectangle.prototype.render.call(this, ctx);
         const x = this.anchor[0] - this.width / 2;
         const y = this.anchor[1] - this.height / 2;
         ctx.drawImage(this.image, x, y, this.imageBounding.width, this.imageBounding.height);
+        ctx.restore();
     }
 }
 export default Icon;

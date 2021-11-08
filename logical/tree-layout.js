@@ -63,20 +63,50 @@ function iterateLinks(
 
 //     iterateLinks(reduceHeight, links, linkLength, root, stack);
 // }
-
+function sqr(x) {
+    return x * x;
+}
+function dist2(v, w) {
+    return sqr(v[0] - w[0]) + sqr(v[1] - w[1]);
+}
 class TreeLayout {
     constructor(configs) {
         this.linkLength = configs.linkLength || 18;
         this.root = configs.root;
+        this.static = true;
+
+    }
+
+    staticCheck(instance, jflow) {
+       
+        const nowAnchor = instance.anchor.slice();
+        jflow.reflow();
+        if(jflow._linkStack.length < 2) return;
+        const currentAnchor = instance.anchor;
+        const d = dist2(nowAnchor, currentAnchor);
+        if(d > 1000) {
+            const {
+                toInstances
+            } = jflow.removeLinkOnInstance(instance);
+            if(instance === this.root) {
+                this.root = toInstances[0];
+            }
+            instance.anchor = nowAnchor;
+            
+            jflow.recalculate();
+            jflow.reflow();
+            return true;
+        }
+        return false;
     }
 
     reflow(jflow){
         const links = jflow._linkStack;
         const instances = jflow._stack;
-        let root = this.root;
-        if(!root) {
-            root = instances[0];
+        if(!this.root) {
+            this.root = instances[0];
         }
+        const root = this.root;
         let level = 0;
         const linkLength = this.linkLength;
         root.anchor = [0, 0];

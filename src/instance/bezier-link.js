@@ -12,7 +12,7 @@ class BezierLink extends Instance {
     }
 
     getColor() {
-        if(this.status.hover) {
+        if(this._isTargeting) {
             return this.hoverStyle;
         }
         return this.defaultStyle;

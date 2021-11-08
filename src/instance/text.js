@@ -8,11 +8,11 @@ class Text extends Rectangle {
         this.lineHeight =       configs.lineHeight ;
         this.indent =           configs.indent || 0;
         requestCacheCanvas((ctx) => {
-            this.render(ctx);
+            this.renderShadowText(ctx);
         })
     }
 
-    render(ctx) {
+    renderShadowText(ctx) {
         ctx.beginPath();
         ctx.font = this.font;
         ctx.textAlign = this.textAlign;
@@ -32,13 +32,21 @@ class Text extends Rectangle {
         } else {
             this.height = height;
         }
+    }
+
+    render(ctx) {
+        ctx.save();
+        if(this._isMoving){
+            ctx.globalAlpha = 0.5;
+        }
+        this.renderShadowText(ctx);
         
 
         // ctx.rect(this.anchor[0] - this.width / 2, this.anchor[1] - this.height / 2, this.width, this.height);
         // ctx.fillStyle = this.color;
         // ctx.fill();     
         ctx.fillText(this.content, this.anchor[0] + this.indent, this.anchor[1]);
-        // ctx.
+        ctx.restore();
     }
 }
 
